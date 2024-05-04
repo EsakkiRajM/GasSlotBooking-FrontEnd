@@ -1,54 +1,49 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { TextField } from '@mui/material';
+import { Alert, TextField } from '@mui/material';
 import './Registration.css';
 import { Link } from 'react-router-dom';
-import { ValueContext } from '../App';
 import axios from 'axios';
 import bcryptjs from 'bcryptjs';
 
 const Login = () => {
-  const { registerFormState, setRegisterFormState } = useContext(ValueContext);
   const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
   const [loading, setLoading] = useState(false);
+  const [alertMsg, setAlertMsg ] = useState("");
+  const [isShowAlertMsg, setIsShowAlertMsg] = useState(false);
   
   const handleFormSubmit = async (values) => {
     setLoading(true);
 
     try {
       if(values) {
-        const response = await axios.get(`${apiUrl}/findUserName?username=${values.username}`);
-        if(response.data._id){
-            alert("Username already exists try another name!")
-        } 
+        const response = await axios.get(`${apiUrl}/login?username=${values.username}&password=${values.password}`);
+        console.log(response.data, "response");
+        if(response.data.username === values.username){
+            console.log("response data name is correct")
+        }
+        if(response.data.password) {
+          console.log("password is true");
+        }
+        setIsShowAlertMsg(false);
         //console.log(response.data._id, "response");
       }
     } catch(err) {
-      const errorName = err.response.data.error
-      //console.log(err.response.data.error, "err");
-      
-      if(errorName === "User not found"){
-        const hashPassword =await bcryptjs.hash(values.password, 0);
-        console.log(hashPassword, "hashPassword");
-        // const compare = await bcryptjs.compare(values.password, hashPassword)
-        // console.log(compare, "compare");
-            await axios.post(`${apiUrl}/registration`, {
-              username: values.username,
-              password: hashPassword,
-              phonenumber: values.phonenumber,
-            });
-            setRegisterFormState(
-              ...registerFormState,
-              values);
-            // Reset form after successful submission
-            values.username = '';
-            values.password = '';
-            values.phonenumber = '';
+      const errorName = err.response.data.message
+      //console.log(errorName, "err");
+      if(errorName === "Username not found") {
+        //alert('username not found')
+        setIsShowAlertMsg(true);
+        setAlertMsg("username not found")
+      } if(errorName === "Incorrect password"){
+        //alert("Incorrect password")
+        setAlertMsg("Incorrect password")
+        setIsShowAlertMsg(true);
       }
-
-    }
-    setLoading(false);
+      
   };
+  setLoading(false);
+}
   
   return (
     <div className="background-container">
@@ -57,7 +52,6 @@ const Login = () => {
           initialValues={{
             username: '',
             password: '',
-            phonenumber: '',
           }}
           validate={(values) => {
             const errors = {};
@@ -70,6 +64,8 @@ const Login = () => {
             return errors;
           }}
           
+          onSubmit={(values) => handleFormSubmit(values)}
+
         >
           <Form>
             <h4 className="text-center text-primary">LOGIN HERE !</h4>
@@ -103,7 +99,10 @@ const Login = () => {
               </Field>{' '}
               <br />
               <ErrorMessage name="password" component="div" className="text-danger" />
-            </div>
+            </div> <br />
+            {
+              isShowAlertMsg && <div><Alert severity="error"> { alertMsg } </Alert></div>
+            }
             <div className="mt-3">
               <p>
                 Don't you have an account{' '}
