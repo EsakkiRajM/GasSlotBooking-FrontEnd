@@ -2,6 +2,7 @@ import React from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { TextField } from '@mui/material';
 import './Registration.css'
+import { Link } from 'react-router-dom'
 
 const Registration = () => {
   return (
@@ -50,6 +51,9 @@ const Registration = () => {
                 />
               )}
             </Field> <br /> <br />
+            <div>
+              <p>Already have an account <Link to={"/login"} className='link-offset-2 link-underline link-underline-opacity-0' >login</Link></p>
+            </div>
             <div className='text-center'>
               <button className='btn btn-primary'>Register</button>
             </div> <br />
