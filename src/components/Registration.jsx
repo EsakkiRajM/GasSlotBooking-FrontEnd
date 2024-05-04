@@ -5,15 +5,22 @@ import './Registration.css';
 import { Link } from 'react-router-dom';
 import { ValueContext } from '../App';
 import axios from 'axios';
+import bcryptjs from 'bcryptjs';
 
 const Registration = () => {
   const { registerFormState, setRegisterFormState } = useContext(ValueContext);
   const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
 
-  console.log(registerFormState, "username");
+  //console.log(registerFormState, "username");
 
   const [loading, setLoading] = useState(false);
   const [usernameExistsMsg, setUsernameExistsMsg] = useState('');
+
+  // const hash = async () => {
+  //   const hashPassword =await bcryptjs.hash("password", 0);
+  //     console.log(hashPassword);
+
+  // }
 
   
   const handleFormSubmit = async (values) => {
@@ -30,10 +37,15 @@ const Registration = () => {
     } catch(err) {
       const errorName = err.response.data.error
       //console.log(err.response.data.error, "err");
+      
       if(errorName === "User not found"){
+        const hashPassword =await bcryptjs.hash(values.password, 0);
+        console.log(hashPassword, "hashPassword");
+        // const compare = await bcryptjs.compare(values.password, hashPassword)
+        // console.log(compare, "compare");
             await axios.post(`${apiUrl}/registration`, {
               username: values.username,
-              password: values.password,
+              password: hashPassword,
               phonenumber: values.phonenumber,
             });
             setRegisterFormState(
