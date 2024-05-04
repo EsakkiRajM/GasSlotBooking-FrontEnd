@@ -1,0 +1,48 @@
+
+  .form-container {
+    background-color: whitesmoke; /* Background color for the form */
+    padding: 20px; /* Add padding to the form container */
+    border-radius: 30px; /* Add border-radius for rounded corners */
+  }
+
+  @media (min-width: 576px) { 
+    .background-container {
+      /* background-color: rgba(0, 0, 0, 0.5); Adjust the opacity value as needed */
+      background-image: url(../assets/gasimg.png);
+      background-repeat: no-repeat;
+      background-size: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999; /* Ensure the background covers everything */
+    }
+    
+}
+
+@media (min-width: 576px) { 
+  .form-container {
+    background-color: whitesmoke; /* Background color for the form */
+    padding: 40px; /* Add padding to the form container */
+    border-radius: 30px; /* Add border-radius for rounded corners */
+    background-size: 100%;
+  }
+
+}
+
+.background-container {
+  /* background-color: rgba(0, 0, 0, 0.5); Adjust the opacity value as needed */
+  background-image: url(../assets/gasimg.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  /* z-index: 999; Ensure the background covers everything */
+}
+
+  
