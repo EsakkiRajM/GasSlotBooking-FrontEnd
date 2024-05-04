@@ -1,9 +1,14 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Registration from "./components/Registration";
 import Login from "./components/Login";
+import { createContext, useState } from 'react';
+
+export const ValueContext = createContext();
 
 
 const App = () => {
+
+  const [ registerFormState, setRegisterFormState ] = useState([])
 
     const router = createBrowserRouter([
         {
@@ -24,7 +29,11 @@ const App = () => {
 
   return (
     <div>
+      <ValueContext.Provider value={ {registerFormState, setRegisterFormState,
+        
+      } }>
       <RouterProvider router={router} />
+      </ValueContext.Provider>
     </div>
   )
 }

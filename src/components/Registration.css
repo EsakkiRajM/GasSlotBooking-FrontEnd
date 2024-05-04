@@ -36,7 +36,7 @@
     }
     .form-container {
       background-color: whitesmoke; /* Background color for the form */
-      padding: 40px; /* Add padding to the form container */
+      padding: 30px; /* Add padding to the form container */
       border-radius: 30px; /* Add border-radius for rounded corners */
       background-size: 100%;
     }

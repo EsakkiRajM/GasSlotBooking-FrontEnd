@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { TextField } from '@mui/material';
 import './Registration.css'
 import { Link } from 'react-router-dom'
+import { ValueContext } from '../App';
 
 const Registration = () => {
+
+  const { registerFormState, setRegisterFormState } = useContext(ValueContext);
+
+  console.log(registerFormState, "registerFormState");
+
   return (
     <div className="background-container">
       <div className="position-absolute top-50 start-50 translate-middle form-container">
@@ -15,9 +21,21 @@ const Registration = () => {
             password: "",
             phonenumber: ""
           }}
+
+
+
+          onSubmit={(values) => {
+              setRegisterFormState(
+                ...registerFormState,
+                values
+              )
+            
+          }}
+
         >
           <Form>
             <h4 className='text-center'>REGISTER HERE!</h4>
+            <div className='text-center'>
             <Field name="username">
               {({ field }) => (
                 <TextField
@@ -51,11 +69,12 @@ const Registration = () => {
                 />
               )}
             </Field> <br /> <br />
+            </div>
             <div>
-              <p>Already have an account <Link to={"/login"} className='link-offset-2 link-underline link-underline-opacity-0' >login</Link></p>
+              <p>Already you have an account <Link to={"/login"} className='link-offset-2 link-underline link-underline-opacity-0' >login</Link></p>
             </div>
             <div className='text-center'>
-              <button className='btn btn-primary'>Register</button>
+              <button type='submit' className='btn btn-primary'>Register</button>
             </div> <br />
 
           </Form>
