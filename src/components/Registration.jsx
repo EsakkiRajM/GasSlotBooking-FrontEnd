@@ -10,52 +10,45 @@ const Registration = () => {
   const { registerFormState, setRegisterFormState } = useContext(ValueContext);
   const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
 
+  console.log(registerFormState, "username");
+
   const [loading, setLoading] = useState(false);
   const [usernameExistsMsg, setUsernameExistsMsg] = useState('');
 
+  
   const handleFormSubmit = async (values) => {
     setLoading(true);
-    
+
     try {
-      const handleCheckUserName = await handleCheckUserName();
-      if (handleCheckUserName) {
-        alert("Username Already Exists try another one!")
+      if(values) {
+        const response = await axios.get(`${apiUrl}/findUserName?username=${values.username}`);
+        if(response.data._id){
+            alert("Username already exists try another name!")
+        } 
+        //console.log(response.data._id, "response");
       }
-      else {
-        await axios.post(`${apiUrl}/registration`, {
-          username: values.username,
-          password: values.password,
-          phonenumber: values.phonenumber,
-        });
-        setRegisterFormState(values);
-        // Reset form after successful submission
-        values.username = '';
-        values.password = '';
-        values.phonenumber = '';
+    } catch(err) {
+      const errorName = err.response.data.error
+      //console.log(err.response.data.error, "err");
+      if(errorName === "User not found"){
+            await axios.post(`${apiUrl}/registration`, {
+              username: values.username,
+              password: values.password,
+              phonenumber: values.phonenumber,
+            });
+            setRegisterFormState(
+              ...registerFormState,
+              values);
+            // Reset form after successful submission
+            values.username = '';
+            values.password = '';
+            values.phonenumber = '';
       }
 
-    } catch (error) {
-      console.error('Error occurred while registering user:', error);
-      // Handle error, show error message to the user
     }
     setLoading(false);
   };
-
-  const handleCheckUserName = async (username) => {
-
-    const response = await axios.get(`${apiUrl}/findUserName?username=${username}`);
-    console.log(response.data);
-    if (response.data) {
-      setUsernameExistsMsg('Username already exists');
-    } else {
-      setUsernameExistsMsg('');
-    }
-  };
-
-  const handleFocus = () => {
-    setUsernameExistsMsg("");
-  }
-
+  
   return (
     <div className="background-container">
       <div className="position-absolute top-50 start-50 translate-middle form-container">
@@ -78,9 +71,8 @@ const Registration = () => {
             }
             return errors;
           }}
-          onSubmit={(values) => {
+          onSubmit={(values) =>
             handleFormSubmit(values)
-          }
           }
         >
           <Form>
@@ -95,7 +87,6 @@ const Registration = () => {
                       label="Enter your Email"
                       variant="standard"
                       type="email"
-                      onBlur={() => handleCheckUserName(field.value)}
                     />
                     {usernameExistsMsg ? <div className="text-danger">{usernameExistsMsg}</div> : ""}
                   </>
@@ -112,7 +103,6 @@ const Registration = () => {
                     label="Enter your Password"
                     variant="standard"
                     type="password"
-                    onFocus={handleFocus}
                   />
                 )}
               </Field>{' '}
