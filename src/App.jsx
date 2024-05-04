@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Registration from "./components/Registration";
 import Login from "./components/Login";
 import { createContext, useState } from 'react';
+import ForgotPassword from './components/ForgotPassword';
 
 export const ValueContext = createContext();
 
@@ -22,9 +23,13 @@ const App = () => {
           ]
         },
         {
-          path: "login",
+          path: "/login",
           element: <Login />
-        }
+        },
+        {
+          path: "/forgotPassword",
+          element: <ForgotPassword />
+        },
     ])
 
   return (
