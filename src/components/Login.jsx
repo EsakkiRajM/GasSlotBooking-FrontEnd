@@ -4,10 +4,11 @@ import { Alert, TextField } from '@mui/material';
 import './Registration.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import bcryptjs from 'bcryptjs';
+import LoadingPage from './LoadingPage';
 
 const Login = () => {
   const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
+  // Local state
   const [loading, setLoading] = useState(false);
   const [alertMsg, setAlertMsg ] = useState("");
   const [isShowAlertMsg, setIsShowAlertMsg] = useState(false);
@@ -34,7 +35,7 @@ const Login = () => {
       if(errorName === "Username not found") {
         //alert('username not found')
         setIsShowAlertMsg(true);
-        setAlertMsg("username not found")
+        setAlertMsg("Incorrect Username")
       } if(errorName === "Incorrect password"){
         //alert("Incorrect password")
         setAlertMsg("Incorrect password")
@@ -117,9 +118,11 @@ const Login = () => {
               </p>
             </div>
             <div className="text-center">
-              <button type="submit" className="btn btn-primary" disabled={loading}>
-                {loading ? 'Login Loading...' : 'Login'}
-              </button>
+              
+                {loading ? <LoadingPage /> 
+                : 
+                <button type="submit" className="btn btn-primary" disabled={loading}>Login</button>}
+              
             </div>{' '}
             <br />
           </Form>

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { ValueContext } from '../App';
 import axios from 'axios';
 import bcryptjs from 'bcryptjs';
+import LoadingPage from './LoadingPage';
 
 const Registration = () => {
   const { registerFormState, setRegisterFormState } = useContext(ValueContext);
@@ -22,45 +23,45 @@ const Registration = () => {
 
   // }
 
-  
+
   const handleFormSubmit = async (values) => {
     setLoading(true);
 
     try {
-      if(values) {
+      if (values) {
         const response = await axios.get(`${apiUrl}/findUserName?username=${values.username}`);
-        if(response.data._id){
-            alert("Username already exists try another name!")
-        } 
+        if (response.data._id) {
+          alert("Username already exists try another name!")
+        }
         //console.log(response.data._id, "response");
       }
-    } catch(err) {
+    } catch (err) {
       const errorName = err.response.data.error
       //console.log(err.response.data.error, "err");
-      
-      if(errorName === "User not found"){
-        const hashPassword =await bcryptjs.hash(values.password, 0);
+
+      if (errorName === "User not found") {
+        const hashPassword = await bcryptjs.hash(values.password, 0);
         console.log(hashPassword, "hashPassword");
         // const compare = await bcryptjs.compare(values.password, hashPassword)
         // console.log(compare, "compare");
-            await axios.post(`${apiUrl}/registration`, {
-              username: values.username,
-              password: hashPassword,
-              phonenumber: values.phonenumber,
-            });
-            setRegisterFormState(
-              ...registerFormState,
-              values);
-            // Reset form after successful submission
-            values.username = '';
-            values.password = '';
-            values.phonenumber = '';
+        await axios.post(`${apiUrl}/registration`, {
+          username: values.username,
+          password: hashPassword,
+          phonenumber: values.phonenumber,
+        });
+        setRegisterFormState(
+          ...registerFormState,
+          values);
+        // Reset form after successful submission
+        values.username = '';
+        values.password = '';
+        values.phonenumber = '';
       }
 
     }
     setLoading(false);
   };
-  
+
   return (
     <div className="background-container">
       <div className="position-absolute top-50 start-50 translate-middle form-container">
@@ -143,9 +144,13 @@ const Registration = () => {
               </p>
             </div>
             <div className="text-center">
-              <button type="submit" className="btn btn-primary" disabled={loading}>
-                {loading ? 'Registering...' : 'Register'}
-              </button>
+
+              {loading ? <LoadingPage />
+               : 
+               <button type="submit" className="btn btn-primary" disabled={loading}>
+                Register
+              </button>}
+
             </div>{' '}
             <br />
           </Form>

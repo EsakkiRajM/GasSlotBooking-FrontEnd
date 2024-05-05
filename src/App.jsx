@@ -3,6 +3,7 @@ import Registration from "./components/Registration";
 import Login from "./components/Login";
 import { createContext, useState } from 'react';
 import ForgotPassword from './components/ForgotPassword';
+import CreatePassword from './components/CreatePassword';
 
 export const ValueContext = createContext();
 
@@ -30,6 +31,10 @@ const App = () => {
           path: "/forgotPassword",
           element: <ForgotPassword />
         },
+        {
+          path: "/createpassword",
+          element: <CreatePassword />
+        }
     ])
 
   return (
