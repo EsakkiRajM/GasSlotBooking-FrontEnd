@@ -19,7 +19,7 @@ const OTPPage = () => {
 
     try {
       if (values) {
-        const response = await axios.get(`${apiUrl}/findUserName?username=${values.username}`);
+        const response = await axios.get(`${apiUrl}/findExistUser?username=${values.username}`);
         if (response.data._id) {
           // alert("Username already exists try another name!")
           navigate("/OTPPage")
@@ -67,9 +67,9 @@ const OTPPage = () => {
                     <TextField
                       {...field}
                       id="outlined-basic"
-                      label="Enter your Email"
+                      label="Enter Your OTP"
                       variant="outlined"
-                      type="email"
+                      type="text"
                     />
                   </>
                 )}
@@ -91,6 +91,7 @@ const OTPPage = () => {
         </Formik>
       </div>
     </div>
+    // MUI 
   );
 };
 

@@ -5,6 +5,7 @@ import { createContext, useState } from 'react';
 import ForgotPassword from './components/ForgotPassword';
 import CreatePassword from './components/CreatePassword';
 import OTPPage from './components/OTPPage';
+import Demo from './components/Demos';
 
 export const ValueContext = createContext();
 
@@ -39,6 +40,10 @@ const App = () => {
         {
           path: "/OTPPage",
           element: <OTPPage />
+        },
+        {
+          path: "/Demo",
+          element: <Demo />
         }
     ])
 
