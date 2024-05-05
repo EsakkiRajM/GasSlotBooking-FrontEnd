@@ -6,7 +6,7 @@ import axios from 'axios';
 import LoadingPage from './LoadingPage';
 import { useNavigate } from 'react-router-dom';
 
-const ForgotPassword = () => {
+const OTPPage = () => {
   const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
   // Local state
   const [loading, setLoading] = useState(false);
@@ -59,7 +59,7 @@ const ForgotPassword = () => {
 
         >
           <Form>
-            <h4 className="text-center text-primary">FORGOT PASSWORD !</h4>
+            <h4 className="text-center text-primary">ENTER VALID OTP !</h4>
             <div className="text-center mt-3">
               <Field name="username">
                 {({ field }) => (
@@ -83,7 +83,7 @@ const ForgotPassword = () => {
 
               {loading ? <LoadingPage />
                 :
-                <button type="submit" className="btn btn-primary">Reset Your Password</button>}
+                <button type="submit" className="btn btn-primary">Submit OTP</button>}
 
             </div>{' '}
             <br />
@@ -94,4 +94,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default OTPPage;

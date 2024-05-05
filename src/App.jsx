@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import { createContext, useState } from 'react';
 import ForgotPassword from './components/ForgotPassword';
 import CreatePassword from './components/CreatePassword';
+import OTPPage from './components/OTPPage';
 
 export const ValueContext = createContext();
 
@@ -34,6 +35,10 @@ const App = () => {
         {
           path: "/createpassword",
           element: <CreatePassword />
+        },
+        {
+          path: "/OTPPage",
+          element: <OTPPage />
         }
     ])
 
