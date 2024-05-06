@@ -6,6 +6,7 @@ import ForgotPassword from './components/ForgotPassword';
 import CreatePassword from './components/CreatePassword';
 import OTPPage from './components/OTPPage';
 import Demo from './components/Demos';
+import ConfirmPassword from './components/ConfirmPassword';
 
 export const ValueContext = createContext();
 
@@ -13,6 +14,7 @@ export const ValueContext = createContext();
 const App = () => {
 
   const [ registerFormState, setRegisterFormState ] = useState([])
+  const [ OTPPageState, setOTPPageState ] = useState({});
 
     const router = createBrowserRouter([
         {
@@ -44,13 +46,17 @@ const App = () => {
         {
           path: "/Demo",
           element: <Demo />
+        },
+        {
+          path: "/confirmPassword",
+          element: <ConfirmPassword />
         }
     ])
 
   return (
     <div>
       <ValueContext.Provider value={ {registerFormState, setRegisterFormState,
-        
+        OTPPageState, setOTPPageState
       } }>
       <RouterProvider router={router} />
       </ValueContext.Provider>

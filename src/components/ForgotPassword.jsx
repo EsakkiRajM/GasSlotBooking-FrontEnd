@@ -7,7 +7,7 @@ import LoadingPage from './LoadingPage';
 import { useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
-  const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
+  const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL  
   // Local state
   const [loading, setLoading] = useState(false);
   const [alertMsg, setAlertMsg] = useState("");
@@ -19,11 +19,13 @@ const ForgotPassword = () => {
 
     try {
       if (values) {
-        const response = await axios.get(`${apiUrl}/findUserName?username=${values.username}`);
+        const response = await axios.get(`${apiUrl}/findExistUser?username=${values.username}`);
         if (response.data._id) {
           // alert("Username already exists try another name!")
           navigate("/OTPPage")
-
+          console.log(response.data, "response.data");
+          localStorage.setItem('OTP', `${response.data.OTP}`);
+          localStorage.setItem('username', `${response.data.username}`);
         }
         setIsShowAlertMsg(false);
         //console.log(response.data._id, "response");
@@ -83,7 +85,7 @@ const ForgotPassword = () => {
 
               {loading ? <LoadingPage />
                 :
-                <button type="submit" className="btn btn-primary">Reset Your Password</button>}
+                <button type="submit" className="btn btn-primary">Get OTP</button>}
 
             </div>{' '}
             <br />

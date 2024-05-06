@@ -6,24 +6,29 @@ import axios from 'axios';
 import LoadingPage from './LoadingPage';
 import { useNavigate } from 'react-router-dom';
 
+
 const OTPPage = () => {
-  const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
+  const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend 
+
   // Local state
   const [loading, setLoading] = useState(false);
   const [alertMsg, setAlertMsg] = useState("");
   const [isShowAlertMsg, setIsShowAlertMsg] = useState(false);
   const navigate = useNavigate();
 
+  const OTP = localStorage.getItem("OTP");
+  const username = localStorage.getItem("username")
+
   const handleFormSubmit = async (values) => {
     setLoading(true);
 
     try {
       if (values) {
-        const response = await axios.get(`${apiUrl}/findExistUser?username=${values.username}`);
-        if (response.data._id) {
-          // alert("Username already exists try another name!")
-          navigate("/OTPPage")
-
+        const response = await axios.get(`${apiUrl}/submitOTP?username=${username}&otp=${OTP}`);
+        console.log(response.data);
+        if (values.OTP) {
+          navigate("/confirmPassword")
+          localStorage.removeItem("OTP")
         }
         setIsShowAlertMsg(false);
         //console.log(response.data._id, "response");
@@ -31,11 +36,11 @@ const OTPPage = () => {
     } catch (err) {
       const errorName = err.response.data.error
       console.log(errorName, "err");
-        if (errorName === "User not found") {
-          //alert('username not found')
-          setIsShowAlertMsg(true);
-          setAlertMsg("Incorrect Username")
-        }
+        // if (errorName === "User not found") {
+        //   //alert('username not found')
+        //   setIsShowAlertMsg(true);
+        //   setAlertMsg("Incorrect Username")
+        // }
     };
     setLoading(false);
   }
@@ -45,12 +50,12 @@ const OTPPage = () => {
       <div className="position-absolute top-50 start-50 translate-middle form-container">
         <Formik
           initialValues={{
-            username: '',
+            OTP: OTP.toString(),
           }}
           validate={(values) => {
             const errors = {};
-            if (!values.username) {
-              errors.username = 'Username is Required';
+            if (!values.OTP) {
+              errors.OTP = 'OTP is Required';
             }
             return errors;
           }}
@@ -61,7 +66,7 @@ const OTPPage = () => {
           <Form>
             <h4 className="text-center text-primary">ENTER VALID OTP !</h4>
             <div className="text-center mt-3">
-              <Field name="username">
+              <Field name="OTP">
                 {({ field }) => (
                   <>
                     <TextField
@@ -75,7 +80,7 @@ const OTPPage = () => {
                 )}
               </Field>{' '}
             </div>
-            <ErrorMessage name="username" component="div" className="text-danger text-center" />
+            <ErrorMessage name="OTP" component="div" className="text-danger text-center" />
             {
               isShowAlertMsg && <div><Alert severity="error"> {alertMsg} </Alert></div>
             }
