@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Alert, TextField } from '@mui/material';
 import './Registration.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LoadingPage from './LoadingPage';
+import { ValueContext } from '../App';
 
 const Login = () => {
   const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
+  // Navigation
+
+    const navigate = useNavigate();
+
+  // Global State
+  const { isAdminLogIn, setIsAdminLogIn } = useContext(ValueContext);
+
+  console.log(isAdminLogIn, "isAdminLogIn");
   // Local state
   const [loading, setLoading] = useState(false);
   const [alertMsg, setAlertMsg ] = useState("");
@@ -22,6 +31,14 @@ const Login = () => {
         console.log(response.data, "response");
         if(response.data.username === values.username){
             console.log("response data name is correct")
+            localStorage.setItem("username", `${response.data.username}`)
+            if (response.data.isAdminLogIn) {
+              setIsAdminLogIn(true);
+              navigate("/Home")
+            } else {
+              setIsAdminLogIn(false);
+              navigate("/Home")
+            }
         }
         if(response.data.password) {
           console.log("password is true");
