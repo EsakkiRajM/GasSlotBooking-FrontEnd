@@ -31,13 +31,17 @@ import { useNavigate } from 'react-router-dom';
 
 const UserDashboard = () => {
 
-  const { usernameLocalState, setUsernameLocalState, sideBarValue, setSideBarValue } = useContext(ValueContext);
+  const { usernameLocalState, setUsernameLocalState, setSideBarValue,
+    setPhoneNumberLocalState
+   } = useContext(ValueContext);
 
   const username = localStorage.getItem("username");
+  const phonenumber = localStorage.getItem("phonenumber");
 
   setUsernameLocalState(username);
+  setPhoneNumberLocalState(phonenumber);
 
-  console.log(usernameLocalState);
+  //console.log(usernameLocalState);
 
   const navigate = useNavigate();
   

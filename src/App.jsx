@@ -19,6 +19,8 @@ const App = () => {
   const [ isAdminLogIn, setIsAdminLogIn ] = useState(false);
   const [ usernameLocalState, setUsernameLocalState ] = useState("");
   const [ sideBarValue,setSideBarValue ] = useState("");
+  const [ phoneNumberLocalState, setPhoneNumberLocalState ] = useState("");
+  const [ bookingDateAndTime, setBookingDateAndTime ] = useState("");
 
     const router = createBrowserRouter([
         {
@@ -67,7 +69,9 @@ const App = () => {
         OTPPageState, setOTPPageState,
         isAdminLogIn, setIsAdminLogIn,
         usernameLocalState, setUsernameLocalState,
-        sideBarValue,setSideBarValue
+        sideBarValue,setSideBarValue,
+        phoneNumberLocalState, setPhoneNumberLocalState,
+        bookingDateAndTime, setBookingDateAndTime
       } }>
       <RouterProvider router={router} />
       </ValueContext.Provider>

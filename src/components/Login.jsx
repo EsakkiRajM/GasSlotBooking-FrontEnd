@@ -32,6 +32,8 @@ const Login = () => {
         if(response.data.username === values.username){
             console.log("response data name is correct")
             localStorage.setItem("username", `${response.data.username}`)
+            localStorage.setItem("phonenumber", `${response.data.phonenumber}`)
+            localStorage.setItem("id", `${response.data._id}`)
             if (response.data.isAdminLogIn) {
               setIsAdminLogIn(true);
               navigate("/Home")
