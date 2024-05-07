@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <div>
         {
-            username ? isAdminLogIn ? <AdminDashboard /> : <UserDashboard /> 
+            username ? isAdminLogIn ? <AdminDashboard /> : <UserDashboard />
             : 
             <div>Something went wrong go to <Link to={"/login"}>login</Link> page</div>
         }

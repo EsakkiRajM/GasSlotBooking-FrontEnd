@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { ValueContext } from '../../App';
 import axios from 'axios';
-import { ErrorMessage, Field, Form, Formik, useFormikContext } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Autocomplete, TextField } from '@mui/material';
 import LoadingPage from '../LoadingPage';
 import Date from './Date';
@@ -9,22 +9,25 @@ import Date from './Date';
 const CustomerBooking = () => {
     //Global State
     const { sideBarValue, phoneNumberLocalState, usernameLocalState } = useContext(ValueContext);
-    const formik = useFormikContext(); // Access Formik context
+    //const formik = useFormikContext(); // Access Formik context
 
     // Local state
     const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
     const [loading, setLoading] = useState(false);
+    const [ gasProviderName, setGasProviderName ] = useState("");
 
-    const handleFormSubmit = async (values) => {
-        values.preventDefault();
+    console.log(gasProviderName, "gasProviderName");
+
+    const handleFormSubmit = (values) => {
         setLoading(true);
-
+        console.log(values);
         try {
             if (values) {
-                const response = await axios.get(`${apiUrl}/findUserName?username=${values.username}`);
-                if (response.data._id) {
-                    alert("Username already exists try another name!")
-                }
+                // const response = await axios.get(`${apiUrl}/findUserName?username=${values.username}`);
+                // if (response.data._id) {
+                //     alert("Username already exists try another name!")
+                // }
+                console.log(values, "values");
             }
         } catch (err) {
             const errorName = err.response.data.error;
@@ -51,12 +54,6 @@ const CustomerBooking = () => {
         { label: 'Sathya Gas Agency' },
     ]
 
-    const handleDateSelection = (selectedDate) => {
-        formik.setFieldValue('selectedDate', selectedDate); // Update form value with selected date
-        //formik.resetForm(); // Reset the form
-    };
-
-
     return (
         <div>
             <div className='text-center'>
@@ -77,21 +74,35 @@ const CustomerBooking = () => {
                                     pincode: "",
                                     address1: "",
                                     address2: "",
-                                    gasprovider: "",
+                                    gasprovider: gasProviderName,
                                 }}
+
                                 validate={(values) => {
                                     const errors = {};
-                                    if (!values.username) {
-                                        errors.username = 'Username is Required';
+                                    if (!values.firstname) {
+                                        errors.firstname = 'Firstname is Required';
                                     }
-                                    if (!values.password) {
-                                        errors.password = 'Password is Required';
+                                    if (!values.lastname) {
+                                        errors.lastname = 'Lastname is Required';
                                     }
                                     if (!values.phonenumber) {
-                                        errors.phonenumber = 'Phone Number No is Required';
+                                        errors.phonenumber = 'Phone Number is Required';
                                     }
+                                    if (!values.pincode) {
+                                        errors.pincode = 'Pincode Numberis Required';
+                                    }
+                                    if (!values.address1) {
+                                        errors.address1 = 'Address1 is Required';
+                                    }
+                                    if (!values.address2) {
+                                        errors.address2 = 'Address1 is Required';
+                                    }
+                                    // if (!values.gasprovider) {
+                                    //     errors.gasprovider = 'Gas Provider is Required';
+                                    // }
                                     return errors;
                                 }}
+
                                 onSubmit={(values) => handleFormSubmit(values)}
                             >
                                 <Form>
@@ -105,7 +116,6 @@ const CustomerBooking = () => {
                                                             id="outlined-basic"
                                                             label="First Name"
                                                             variant="outlined"
-                                                            type="firstname"
                                                             style={{ width: '100%' }}
                                                         />
                                                     </>
@@ -123,7 +133,6 @@ const CustomerBooking = () => {
                                                             id="outlined-basic"
                                                             label="Last Name"
                                                             variant="outlined"
-                                                            type="lastname"
                                                             style={{ width: '100%' }}
                                                         />
                                                     </>
@@ -162,7 +171,7 @@ const CustomerBooking = () => {
                                                             id="outlined-basic"
                                                             label="Phone Number"
                                                             variant="outlined"
-                                                            type="phonenumber"
+                                                            type="number"
                                                             style={{ width: '100%' }}
                                                         />
                                                     </>
@@ -183,13 +192,14 @@ const CustomerBooking = () => {
                                                             id="outlined-basic"
                                                             label="Address 1"
                                                             variant="outlined"
-                                                            type="address1"
+                                                            type="text"
                                                             style={{ width: '100%' }}
                                                         />
                                                     </>
                                                 )}
                                             </Field>{' '}
                                             <br />
+
                                             <ErrorMessage name="address1" component="div" className="text-danger" />
                                         </div>
                                         <div className='col-sm-6 col-12'>
@@ -201,7 +211,7 @@ const CustomerBooking = () => {
                                                             id="outlined-basic"
                                                             label="Address 2"
                                                             variant="outlined"
-                                                            type="address2"
+                                                            type="text"
                                                             style={{ width: '100%' }}
                                                         />
                                                     </>
@@ -236,13 +246,13 @@ const CustomerBooking = () => {
                                                 {({ field }) => (
                                                     <>
                                                         <Autocomplete
+                                                            {...field}
                                                             freeSolo
                                                             id="free-solo-2-demo"
                                                             disableClearable
                                                             options={gasProviders.map((option) => option.label)}
                                                             renderInput={(params) => (
                                                                 <TextField
-                                                                    {...field}
                                                                     {...params}
                                                                     label="Gas providers"
                                                                     InputProps={{
@@ -251,28 +261,33 @@ const CustomerBooking = () => {
                                                                     }}
                                                                 />
                                                             )}
+                                                            onChange={(event, newValue) => {
+                                                                field.onChange(newValue); // Update form field value
+                                                                setGasProviderName(newValue)
+                                                            }}
                                                         />
                                                     </>
                                                 )}
-                                            </Field>{' '}
+                                            </Field>
+
                                             <br />
                                         </div>
                                     </div>
 
 
-                                    <div className='row m-3'>
+                                    {/* <div className='row m-3'>
                                         <div className='text-center'>
                                             <div>
-                                                <Date handleDateSelection={handleDateSelection} />
-                                                {/* Render Date component with handleDateSelection prop */}
+                                                <Date />
+                                                Render Date component with handleDateSelection prop
+
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="text-center m-2">
                                         {loading ? <LoadingPage /> :
-                                            <button type="submit" className="btn btn-primary" disabled={loading}>
-                                                Make Booking
-                                            </button>
+                                            <button type="submit" className="btn btn-primary" disabled={loading} >Make Booking</button>
+
                                         }
                                     </div>
                                 </Form>

@@ -55,14 +55,15 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { ValueContext } from '../../App';
 import { useContext } from 'react';
 
-const Date = ({ handleDateSelection }) => {
+const Date = () => {
   const today = dayjs();
   const { bookingDateAndTime, setBookingDateAndTime } = useContext(ValueContext);
 
   const handleDateChange = (date) => {
+    //date.preventDefault();
     const formattedDate = dayjs(date).format('DD/MM/YYYY'); // Format date as required
     setBookingDateAndTime(formattedDate); // Set the selected date in the context
-    handleDateSelection(formattedDate); // Pass the selected date back to the parent component
+   // handleDateSelection(formattedDate); // Pass the selected date back to the parent component
   };
 
   return (
