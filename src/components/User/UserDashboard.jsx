@@ -31,7 +31,7 @@ import { useNavigate } from 'react-router-dom';
 
 const UserDashboard = () => {
 
-  const { usernameLocalState, setUsernameLocalState } = useContext(ValueContext);
+  const { usernameLocalState, setUsernameLocalState, sideBarValue, setSideBarValue } = useContext(ValueContext);
 
   const username = localStorage.getItem("username");
 
@@ -117,7 +117,7 @@ const UserDashboard = () => {
   }));
 
   const handleClick = (text) => {
-    console.log(text.target.innerText);
+    setSideBarValue(text.target.innerText);
   }
 
   return (
