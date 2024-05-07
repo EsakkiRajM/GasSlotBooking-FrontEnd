@@ -17,6 +17,7 @@ const App = () => {
   const [ registerFormState, setRegisterFormState ] = useState([])
   const [ OTPPageState, setOTPPageState ] = useState({});
   const [ isAdminLogIn, setIsAdminLogIn ] = useState(false);
+  const [ usernameLocalState, setUsernameLocalState ] = useState("");
 
     const router = createBrowserRouter([
         {
@@ -63,7 +64,8 @@ const App = () => {
     <div>
       <ValueContext.Provider value={ {registerFormState, setRegisterFormState,
         OTPPageState, setOTPPageState,
-        isAdminLogIn, setIsAdminLogIn
+        isAdminLogIn, setIsAdminLogIn,
+        usernameLocalState, setUsernameLocalState
       } }>
       <RouterProvider router={router} />
       </ValueContext.Provider>
