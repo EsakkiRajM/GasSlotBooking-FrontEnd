@@ -8,8 +8,6 @@ import OTPPage from './components/OTPPage';
 import Demo from './components/Demos';
 import ConfirmPassword from './components/ConfirmPassword';
 import Home from './components/Home';
-import CustomerBooking from './components/User/CustomerBooking';
-import UserDashboard from './components/Demos';
 
 export const ValueContext = createContext();
 
@@ -23,6 +21,7 @@ const App = () => {
   const [ sideBarValue,setSideBarValue ] = useState("");
   const [ phoneNumberLocalState, setPhoneNumberLocalState ] = useState("");
   const [ bookingDateAndTime, setBookingDateAndTime ] = useState("");
+  const [ bookingDetails, setBookingDetails ] = useState([]);
 
     const router = createBrowserRouter([
         {
@@ -74,7 +73,8 @@ const App = () => {
         usernameLocalState, setUsernameLocalState,
         sideBarValue,setSideBarValue,
         phoneNumberLocalState, setPhoneNumberLocalState,
-        bookingDateAndTime, setBookingDateAndTime
+        bookingDateAndTime, setBookingDateAndTime,
+        bookingDetails, setBookingDetails
       } }>
       <RouterProvider router={router} />
       </ValueContext.Provider>

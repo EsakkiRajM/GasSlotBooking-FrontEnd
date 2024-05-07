@@ -4,33 +4,48 @@ import axios from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Autocomplete, TextField } from '@mui/material';
 import LoadingPage from '../LoadingPage';
-import Date from './Date';
 
 const CustomerBooking = () => {
     //Global State
-    const { sideBarValue, phoneNumberLocalState, usernameLocalState } = useContext(ValueContext);
-    //const formik = useFormikContext(); // Access Formik context
+    const { sideBarValue, phoneNumberLocalState, usernameLocalState, setBookingDetails } = useContext(ValueContext);
+
+    //console.log(usernameLocalState);
+
+    const userId = localStorage.getItem("id")
 
     // Local state
     const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
     const [loading, setLoading] = useState(false);
-    const [ gasProviderName, setGasProviderName ] = useState("");
+    const [gasProviderName, setGasProviderName] = useState("");
 
-    console.log(gasProviderName, "gasProviderName");
+    //console.log(gasProviderName, "gasProviderName");
 
-    const handleFormSubmit = (values) => {
+    const handleFormSubmit = async (values,  { resetForm }) => {
         setLoading(true);
         console.log(values);
         try {
             if (values) {
-                // const response = await axios.get(`${apiUrl}/findUserName?username=${values.username}`);
-                // if (response.data._id) {
-                //     alert("Username already exists try another name!")
-                // }
+                const response = await axios.post(`${apiUrl}/createBooking?username=${usernameLocalState}`, {
+                    firstName: values.firstname,
+                    lastName: values.lastname,
+                    email: values.email,
+                    addressOne: values.address1,
+                    addressTwo: values.address2,
+                    phoneNumber: values.phonenumber,
+                    pinCode: values.pincode,
+                    gasProviderName: gasProviderName,
+                    signUpId: userId
+                })
+                //console.log(response.data.message);
+                if(response.data.message){
+                    resetForm();
+                    setGasProviderName("");
+                }
+                console.log(response.data, "response data");
                 console.log(values, "values");
             }
         } catch (err) {
-            const errorName = err.response.data.error;
+            const errorName = err.response.data;
 
             // Handle error appropriately
             console.error(errorName);
@@ -103,7 +118,7 @@ const CustomerBooking = () => {
                                     return errors;
                                 }}
 
-                                onSubmit={(values) => handleFormSubmit(values)}
+                                onSubmit={(values, { resetForm }) => handleFormSubmit(values, { resetForm })}
                             >
                                 <Form>
                                     <div className="row m-3">

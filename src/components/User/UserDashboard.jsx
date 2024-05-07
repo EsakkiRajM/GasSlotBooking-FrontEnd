@@ -27,12 +27,13 @@ import Modal from '@mui/material/Modal';
 import { useContext } from 'react';
 import { ValueContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
+import MyBooking from './MyBooking';
 
 
 const UserDashboard = () => {
 
-  const { usernameLocalState, setUsernameLocalState, setSideBarValue,
-    setPhoneNumberLocalState
+  const { usernameLocalState, setUsernameLocalState, setSideBarValue, sideBarValue, 
+    setPhoneNumberLocalState, setBookingDetails
    } = useContext(ValueContext);
 
   const username = localStorage.getItem("username");
@@ -170,6 +171,7 @@ const UserDashboard = () => {
                   <button className='btn btn-primary' onClick={() => {
                     localStorage.clear();
                     navigate("/login")
+                    setBookingDetails([])
                   }} >&nbsp; Ok &nbsp;</button>
                  </div>
                 </Box>
@@ -216,7 +218,8 @@ const UserDashboard = () => {
       <Main open={open}>
 
         <DrawerHeader />
-        <CustomerBooking />
+        {sideBarValue === "New Booking" && <CustomerBooking />}
+        {sideBarValue === "My Booking" && <MyBooking />  }
       </Main>
 
     </Box>
