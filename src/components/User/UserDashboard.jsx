@@ -28,9 +28,12 @@ import { useContext } from 'react';
 import { ValueContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
 import MyBooking from './MyBooking';
+import axios from 'axios';
 
 
 const UserDashboard = () => {
+
+  const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
 
   const { usernameLocalState, setUsernameLocalState, setSideBarValue, sideBarValue, 
     setPhoneNumberLocalState, setBookingDetails
@@ -121,8 +124,12 @@ const UserDashboard = () => {
     justifyContent: 'flex-end',
   }));
 
-  const handleClick = (text) => {
+  const handleClick = async (text) => {
     setSideBarValue(text.target.innerText);
+    if (text.target.innerText) {
+      const response = await axios.get(`${apiUrl}/getBookingDetails?username=${usernameLocalState}`);
+      setBookingDetails(response.data);
+    }
   }
 
   return (

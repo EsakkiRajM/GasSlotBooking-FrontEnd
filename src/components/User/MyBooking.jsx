@@ -23,10 +23,10 @@ const MyBooking = () => {
 
     console.log(usernameLocalState);
 
-    const handleViewBooking = async () => {
-        const response = await axios.get(`${apiUrl}/getBookingDetails?username=${usernameLocalState}`);
-            setBookingDetails(response.data);
-    }
+    // const handleViewBooking = async () => {
+    //     // const response = await axios.get(`${apiUrl}/getBookingDetails?username=${usernameLocalState}`);
+    //     //     setBookingDetails(response.data);
+    // }
 
     const handleGetEditButton = (customerId) => {
       console.log(customerId, "customerId");
@@ -38,9 +38,9 @@ const MyBooking = () => {
             <div className='text-center'>
                 <h4>{sideBarValue ? sideBarValue : "Welcome to Gas Booking Select Your page"}</h4>
             </div>
-            <div className='text-center'>
+            {/* <div className='text-center'>
                 <button className='btn btn-primary' onClick={handleViewBooking} >View Your Bookings</button>
-            </div>
+            </div> */}
             {/* <div>
                 {bookingDetails && Array.isArray(bookingDetails) && bookingDetails.map((data) => {
                     return <div key={data.id}>{data.email}</div>; // Replace "someProperty" with the property you want to display
