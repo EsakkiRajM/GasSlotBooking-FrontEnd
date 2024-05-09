@@ -1,9 +1,8 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Registration from "./components/Registration";
 import Login from "./components/Login";
 import { createContext, useState } from 'react';
 import ForgotPassword from './components/ForgotPassword';
-import CreatePassword from './components/CreatePassword';
 import OTPPage from './components/OTPPage';
 import ConfirmPassword from './components/ConfirmPassword';
 import Home from './components/Home';
@@ -46,10 +45,6 @@ const App = () => {
     {
       path: "/forgotPassword",
       element: <ForgotPassword />
-    },
-    {
-      path: "/createpassword",
-      element: <CreatePassword />
     },
     {
       path: "/OTPPage",

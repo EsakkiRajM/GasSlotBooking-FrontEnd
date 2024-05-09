@@ -25,7 +25,7 @@ const OTPPage = () => {
     try {
       if (values) {
         const response = await axios.get(`${apiUrl}/submitOTP?username=${username}&otp=${OTP}`);
-        console.log(response.data);
+        //console.log(response.data);
         if (values.OTP) {
           navigate("/confirmPassword")
           localStorage.removeItem("OTP")

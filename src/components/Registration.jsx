@@ -41,7 +41,7 @@ const Registration = () => {
 
       if (errorName === "User not found") {
         const hashPassword = await bcryptjs.hash(values.password, 0);
-        console.log(hashPassword, "hashPassword");
+        //console.log(hashPassword, "hashPassword");
         // const compare = await bcryptjs.compare(values.password, hashPassword)
         // console.log(compare, "compare");
         await axios.post(`${apiUrl}/registration`, {
