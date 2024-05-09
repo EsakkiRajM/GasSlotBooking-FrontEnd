@@ -39,6 +39,10 @@ const AdminDashboard = () => {
   const username = localStorage.getItem("username");
   const phonenumber = localStorage.getItem("phonenumber");
 
+  setUsernameLocalState(username);
+  setPhoneNumberLocalState(phonenumber);
+
+
 
   const navigate = useNavigate();
   
