@@ -5,10 +5,8 @@ import { createContext, useState } from 'react';
 import ForgotPassword from './components/ForgotPassword';
 import CreatePassword from './components/CreatePassword';
 import OTPPage from './components/OTPPage';
-import Demo from './components/Demos';
 import ConfirmPassword from './components/ConfirmPassword';
 import Home from './components/Home';
-import EditBooking from './components/User/EditBooking';
 
 export const ValueContext = createContext();
 
@@ -20,12 +18,14 @@ const App = () => {
   const [isAdminLogIn, setIsAdminLogIn] = useState(false);
   const [usernameLocalState, setUsernameLocalState] = useState("");
   const [sideBarValue, setSideBarValue] = useState("");
+  const [adminSideBarValue, setAdminSideBarValue] = useState("");
   const [phoneNumberLocalState, setPhoneNumberLocalState] = useState("");
   const [bookingDateAndTime, setBookingDateAndTime] = useState("");
   const [bookingDetails, setBookingDetails] = useState([]);
   const [editBookingId, setEditBookingId] = useState("");
   const [ editBookingDetails, setEditBookingDetails ] = useState([])
   const [ editBookingPage, setEditBookingPage ] = useState(false);
+  const [ customerDetails, setCustomerDetails ] = useState([]);
 
 
   const router = createBrowserRouter([
@@ -56,10 +56,6 @@ const App = () => {
       element: <OTPPage />
     },
     {
-      path: "/Demo",
-      element: <Demo />
-    },
-    {
       path: "/confirmPassword",
       element: <ConfirmPassword />
     },
@@ -83,7 +79,9 @@ const App = () => {
         bookingDetails, setBookingDetails,
         editBookingId, setEditBookingId,
         editBookingDetails, setEditBookingDetails,
-        editBookingPage, setEditBookingPage
+        editBookingPage, setEditBookingPage,
+        adminSideBarValue, setAdminSideBarValue,
+        customerDetails, setCustomerDetails
       }}>
         <RouterProvider router={router} />
       </ValueContext.Provider>

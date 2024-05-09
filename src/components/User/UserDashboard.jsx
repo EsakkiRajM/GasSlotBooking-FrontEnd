@@ -226,6 +226,7 @@ const UserDashboard = () => {
       <Main open={open}>
 
         <DrawerHeader />
+        { sideBarValue === "" && <div className='text-center'><h3>Welcome to Gas booking ! Please select your page</h3></div> }
         {sideBarValue === "New Booking" && <CustomerBooking />}
         { editBookingPage && <EditBooking />  }
         {sideBarValue === "My Booking" && <MyBooking />  }
