@@ -13,11 +13,11 @@ import './EditBooking.css';
 
 const EditBooking = () => {
 
-    const { editBookingDetails, phoneNumberLocalState,
-        usernameLocalState, editBookingPage, editBookingId, setEditBookingPage
+    const { editBookingDetails,
+        usernameLocalState, editBookingPage, editBookingId, setEditBookingPage, setBookingDetails
     } = useContext(ValueContext);
 
-    console.log(editBookingDetails, "editBookingId");
+    //console.log(editBookingDetails, "editBookingId");
     // console.log(editBookingId, "editBookingId");
 
 
@@ -30,11 +30,16 @@ const EditBooking = () => {
     const [loading, setLoading] = useState(false);
     const [gasProviderName, setGasProviderName] = useState(null);
 
+    const handleOnLoadTable = async () => {
+        const response = await axios.get(`${apiUrl}/getBookingDetails?username=${usernameLocalState}`);
+        setBookingDetails(response.data);
+    }
+
     const handleFormSubmit = async (values, { resetForm }) => {
         setLoading(true);
         try {
             if (values) {
-                const response = await axios.post(`${apiUrl}/createBooking?username=${usernameLocalState}`, {
+                const response = await axios.patch(`${apiUrl}/updateBooking?username=${usernameLocalState}&bookingId=${editBookingId}`, {
                     firstName: values.firstname,
                     lastName: values.lastname,
                     email: values.email,
@@ -43,16 +48,14 @@ const EditBooking = () => {
                     phoneNumber: values.phonenumber,
                     pinCode: values.pincode,
                     gasProviderName: gasProviderName,
-                    signUpId: userId,
                     DateTime: selectedDate
                 })
-                //console.log(response.data.message);
                 if (response.data.message) {
                     resetForm();
                     setGasProviderName("");
+                    setEditBookingPage(false);
+                    handleOnLoadTable()
                 }
-                //console.log(response.data, "response data");
-                //console.log(values, "values");
             }
         } catch (err) {
             const errorName = err.response.data;
@@ -77,13 +80,22 @@ const EditBooking = () => {
         setSelectedDate(fullDateTime);
     }
 
-    const handleCancelBooking = () => {
-        console.log("cancel booking");
+    const handleCancelBooking = async () => {
+
+        const confirmation = window.confirm("Are you sure want to cancel booking");
+
+        if (confirmation) {
+            const response = await axios.delete(`${apiUrl}/cancelBooking?username=
+        ${usernameLocalState}&bookingId=${editBookingId}`)
+            console.log(response.data);
+            if(response.data.message){
+                handleOnLoadTable();
+                setEditBookingPage(false)   
+            }
+        } 
+        
     }
 
-    const handleUpdateBooking = () => {
-        console.log("update booking");
-    }
 
 
     const gasProviders = [
@@ -332,8 +344,8 @@ const EditBooking = () => {
                                             {loading ? <LoadingPage /> :
                                                 <div className='row justify-content-around'>
                                                     <button className="btn btn-primary col-sm-2 col-12 my-2" onClick={() => setEditBookingPage(false)} disabled={loading} >Back</button>
-                                                    <button type="submit" className="btn btn-primary col-sm-2 col-12 my-2" disabled={loading} onClick={handleUpdateBooking} >Update Booking</button>
-                                                    <button className="btn btn-primary col-sm-2 col-12 my-2" disabled={loading} onClick={handleCancelBooking} >Cancel Booking</button>
+                                                    <button type="submit" className="btn btn-primary col-sm-2 col-12 my-2" disabled={loading} >Update Booking</button>
+                                                    <button type='button' className="btn btn-primary col-sm-2 col-12 my-2" disabled={loading} onClick={handleCancelBooking} >Cancel Booking</button>
                                                 </div>
                                             }
                                         </div>
@@ -341,6 +353,7 @@ const EditBooking = () => {
                                 </Formik>
                             </div>
                         </div>
+
                     </div>
                 }
             </div>
