@@ -10,6 +10,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import './EditBooking.css';
 
 const CustomerBooking = () => {
     //Global State
@@ -30,7 +31,7 @@ const CustomerBooking = () => {
 
     const handleFormSubmit = async (values, { resetForm }) => {
         setLoading(true);
-        console.log(values);
+        //console.log(values);
         try {
             if (values) {
                 const response = await axios.post(`${apiUrl}/createBooking?username=${usernameLocalState}`, {
@@ -42,15 +43,16 @@ const CustomerBooking = () => {
                     phoneNumber: values.phonenumber,
                     pinCode: values.pincode,
                     gasProviderName: gasProviderName,
-                    signUpId: userId
+                    signUpId: userId,
+                    DateTime: selectedDate
                 })
                 //console.log(response.data.message);
                 if (response.data.message) {
                     resetForm();
                     setGasProviderName("");
                 }
-                console.log(response.data, "response data");
-                console.log(values, "values");
+                //console.log(response.data, "response data");
+                //console.log(values, "values");
             }
         } catch (err) {
             const errorName = err.response.data;
@@ -62,41 +64,6 @@ const CustomerBooking = () => {
         }
 
         setLoading(false);
-    };
-
-    const handleDateChange = (date) => {
-        const day = date.getDate(); // Extract date part from the date object
-        const month = date.getMonth() + 1; // Extract month part from the date object
-        const year = date.getFullYear(); // Extract year part from the date object
-        const hours = date.getHours(); // Extract hours part from the date object
-        const minutes = date.getMinutes(); // Extract minutes part from the date object
-
-        const dateObject = new Date(year, month - 1, day, hours, minutes); // Create a new Date object
-
-        const fullYear = dateObject.getFullYear(); // Extract full year from the new Date object
-
-        const filterDateTime = `${day}/${month}/${year} ${hours}:${minutes}`; // Construct the date-time string
-
-        const [datePart, timePart] = filterDateTime.split(" "); // Split into date and time parts
-        const [days, months, years] = datePart.split("/"); // Split date part into day, month, year
-        const [hour, min] = timePart.split(":"); // Split time part into hours, minutes
-
-        // console.log(fullYear, "fullyear"); // Log the full year
-
-        // console.log(typeof filterDateTime); // Log the type of filterDateTime
-
-        // const resut = Object.entries(filterDateTime);
-
-        // const splitDate = resut.split(',')
-
-        // console.log(splitDate, "result");
-
-        console.log(typeof filterDateTime);
-        setSelectedDate(datePart)
-
-        //setSelectedDate(timePart)
-
-        // setSelectedDate(filterDateTime); // Uncomment this line if you want to set the selected date
     };
 
     const handeleDateTime = (event) => {
@@ -186,7 +153,7 @@ const CustomerBooking = () => {
                             >
                                 <Form>
                                     <div className="row m-3">
-                                        <div className='col-sm-6 col-12'>
+                                        <div className='col-sm-6 col-12 text-box'>
                                             <Field name="firstname">
                                                 {({ field }) => (
                                                     <>
@@ -222,7 +189,7 @@ const CustomerBooking = () => {
                                         </div>
                                     </div>
                                     <div className="row m-3">
-                                        <div className='col-sm-6 col-12'>
+                                        <div className='col-sm-6 col-12 text-box'>
                                             <Field name="email">
                                                 {({ field }) => (
                                                     <>
@@ -262,7 +229,7 @@ const CustomerBooking = () => {
                                     </div>
 
                                     <div className="row m-3">
-                                        <div className='col-sm-6 col-12'>
+                                        <div className='col-sm-6 col-12 text-box'>
                                             <Field name="address1">
                                                 {({ field }) => (
                                                     <>
@@ -302,7 +269,7 @@ const CustomerBooking = () => {
                                     </div>
 
                                     <div className="row m-3">
-                                        <div className='col-sm-6 col-12'>
+                                        <div className='col-sm-6 col-12 text-box'>
                                             <Field name="pincode">
                                                 {({ field }) => (
                                                     <>
@@ -356,7 +323,7 @@ const CustomerBooking = () => {
 
                                         </div>
                                     </div>
-                                    <div className="row m-2">
+                                    <div className="row m-3">
                                         <div className='col-sm-6 col-12'>
                                             {/* <Field name="date">
                                                 {({ field }) => (

@@ -8,75 +8,84 @@ import OTPPage from './components/OTPPage';
 import Demo from './components/Demos';
 import ConfirmPassword from './components/ConfirmPassword';
 import Home from './components/Home';
+import EditBooking from './components/User/EditBooking';
 
 export const ValueContext = createContext();
 
 
 const App = () => {
 
-  const [ registerFormState, setRegisterFormState ] = useState([])
-  const [ OTPPageState, setOTPPageState ] = useState({});
-  const [ isAdminLogIn, setIsAdminLogIn ] = useState(false);
-  const [ usernameLocalState, setUsernameLocalState ] = useState("");
-  const [ sideBarValue,setSideBarValue ] = useState("");
-  const [ phoneNumberLocalState, setPhoneNumberLocalState ] = useState("");
-  const [ bookingDateAndTime, setBookingDateAndTime ] = useState("");
-  const [ bookingDetails, setBookingDetails ] = useState([]);
+  const [registerFormState, setRegisterFormState] = useState([])
+  const [OTPPageState, setOTPPageState] = useState({});
+  const [isAdminLogIn, setIsAdminLogIn] = useState(false);
+  const [usernameLocalState, setUsernameLocalState] = useState("");
+  const [sideBarValue, setSideBarValue] = useState("");
+  const [phoneNumberLocalState, setPhoneNumberLocalState] = useState("");
+  const [bookingDateAndTime, setBookingDateAndTime] = useState("");
+  const [bookingDetails, setBookingDetails] = useState([]);
+  const [editBookingId, setEditBookingId] = useState("");
+  const [ editBookingDetails, setEditBookingDetails ] = useState([])
+  const [ editBookingPage, setEditBookingPage ] = useState(false);
 
-    const router = createBrowserRouter([
+
+  const router = createBrowserRouter([
+    {
+      path: "",
+      element: <Registration />,
+      children: [
         {
-          path: "",
-          element: <Registration />,
-          children: [
-            {
-              path: "register",
-              element: <Registration />
-            }
-          ]
-        },
-        {
-          path: "/login",
-          element: <Login />
-        },
-        {
-          path: "/forgotPassword",
-          element: <ForgotPassword />
-        },
-        {
-          path: "/createpassword",
-          element: <CreatePassword />
-        },
-        {
-          path: "/OTPPage",
-          element: <OTPPage />
-        },
-        {
-          path: "/Demo",
-          element: <Demo />
-        },
-        {
-          path: "/confirmPassword",
-          element: <ConfirmPassword />
-        },
-        {
-          path: "/Home",
-          element: <Home />
-        },
-       
-    ])
+          path: "register",
+          element: <Registration />
+        }
+      ]
+    },
+    {
+      path: "/login",
+      element: <Login />
+    },
+    {
+      path: "/forgotPassword",
+      element: <ForgotPassword />
+    },
+    {
+      path: "/createpassword",
+      element: <CreatePassword />
+    },
+    {
+      path: "/OTPPage",
+      element: <OTPPage />
+    },
+    {
+      path: "/Demo",
+      element: <Demo />
+    },
+    {
+      path: "/confirmPassword",
+      element: <ConfirmPassword />
+    },
+    {
+      path: "/Home",
+      element: <Home />
+    }
+
+  ])
 
   return (
     <div>
-      <ValueContext.Provider value={ {registerFormState, setRegisterFormState,
+      <ValueContext.Provider value={{
+        registerFormState, setRegisterFormState,
         OTPPageState, setOTPPageState,
         isAdminLogIn, setIsAdminLogIn,
         usernameLocalState, setUsernameLocalState,
-        sideBarValue,setSideBarValue,
+        sideBarValue, setSideBarValue,
         phoneNumberLocalState, setPhoneNumberLocalState,
         bookingDateAndTime, setBookingDateAndTime,
-        bookingDetails, setBookingDetails
-      } }>
-      <RouterProvider router={router} />
+        bookingDetails, setBookingDetails,
+        editBookingId, setEditBookingId,
+        editBookingDetails, setEditBookingDetails,
+        editBookingPage, setEditBookingPage
+      }}>
+        <RouterProvider router={router} />
       </ValueContext.Provider>
     </div>
   )

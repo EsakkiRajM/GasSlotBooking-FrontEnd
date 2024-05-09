@@ -1,0 +1,8 @@
+@media (max-width: 540px) {
+    .text-box {
+        margin-bottom: 20px;
+    }
+    .color {
+        background-color: blueviolet;
+    }
+} 

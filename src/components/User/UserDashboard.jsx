@@ -29,6 +29,7 @@ import { ValueContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
 import MyBooking from './MyBooking';
 import axios from 'axios';
+import EditBooking from './EditBooking';
 
 
 const UserDashboard = () => {
@@ -36,7 +37,7 @@ const UserDashboard = () => {
   const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
 
   const { usernameLocalState, setUsernameLocalState, setSideBarValue, sideBarValue, 
-    setPhoneNumberLocalState, setBookingDetails
+    setPhoneNumberLocalState, setBookingDetails, editBookingPage
    } = useContext(ValueContext);
 
   const username = localStorage.getItem("username");
@@ -226,7 +227,9 @@ const UserDashboard = () => {
 
         <DrawerHeader />
         {sideBarValue === "New Booking" && <CustomerBooking />}
+        { editBookingPage && <EditBooking />  }
         {sideBarValue === "My Booking" && <MyBooking />  }
+        
       </Main>
 
     </Box>
