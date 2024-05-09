@@ -28,6 +28,10 @@ const MyBooking = () => {
             setBookingDetails(response.data);
     }
 
+    const handleGetEditButton = (customerId) => {
+      console.log(customerId, "customerId");
+    }
+
     console.log(bookingDetails, "bookingDetails");
     return (
         <div>
@@ -68,7 +72,7 @@ const MyBooking = () => {
                     <td> {`${customerDetails.addressOne},  ${customerDetails.addressTwo} -
                     ${customerDetails.pinCode}
                     `} </td>
-                    <td className='text-center'> <button className='btn btn-info'>
+                    <td className='text-center'> <button className='btn btn-info' onClick={() => handleGetEditButton(customerDetails._id)} >
                       <FontAwesomeIcon icon={faPen} />
                     </button> </td>
                     {/* <td className='text-center'> <button className='btn btn-info'
