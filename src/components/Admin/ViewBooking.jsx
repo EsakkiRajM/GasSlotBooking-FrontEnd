@@ -5,7 +5,7 @@ const ViewBooking = () => {
 
     const { customerDetails, adminSideBarValue } = useContext(ValueContext);
 
-    console.log(customerDetails, "customerDetails");
+    //console.log(customerDetails, "customerDetails");
 
   return (
     <div>

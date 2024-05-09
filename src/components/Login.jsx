@@ -16,7 +16,7 @@ const Login = () => {
   // Global State
   const { isAdminLogIn, setIsAdminLogIn } = useContext(ValueContext);
 
-  console.log(isAdminLogIn, "isAdminLogIn");
+  //console.log(isAdminLogIn, "isAdminLogIn");
   // Local state
   const [loading, setLoading] = useState(false);
   const [alertMsg, setAlertMsg ] = useState("");
@@ -28,9 +28,9 @@ const Login = () => {
     try {
       if(values) {
         const response = await axios.get(`${apiUrl}/login?username=${values.username}&password=${values.password}`);
-        console.log(response.data, "response");
+        //console.log(response.data, "response");
         if(response.data.username === values.username){
-            console.log("response data name is correct")
+            //console.log("response data name is correct")
             localStorage.setItem("username", `${response.data.username}`)
             localStorage.setItem("phonenumber", `${response.data.phonenumber}`)
             localStorage.setItem("id", `${response.data._id}`)
@@ -43,7 +43,7 @@ const Login = () => {
             }
         }
         if(response.data.password) {
-          console.log("password is true");
+          //console.log("password is true");
         }
         setIsShowAlertMsg(false);
         //console.log(response.data._id, "response");

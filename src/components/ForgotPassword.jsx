@@ -23,7 +23,7 @@ const ForgotPassword = () => {
         if (response.data._id) {
           // alert("Username already exists try another name!")
           navigate("/OTPPage")
-          console.log(response.data, "response.data");
+          //console.log(response.data, "response.data");
           localStorage.setItem('OTP', `${response.data.OTP}`);
           localStorage.setItem('username', `${response.data.username}`);
         }

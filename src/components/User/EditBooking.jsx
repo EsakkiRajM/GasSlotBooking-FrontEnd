@@ -87,7 +87,7 @@ const EditBooking = () => {
         if (confirmation) {
             const response = await axios.delete(`${apiUrl}/cancelBooking?username=
         ${usernameLocalState}&bookingId=${editBookingId}`)
-            console.log(response.data);
+            //console.log(response.data);
             if(response.data.message){
                 handleOnLoadTable();
                 setEditBookingPage(false)   

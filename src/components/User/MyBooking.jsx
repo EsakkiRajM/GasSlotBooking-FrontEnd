@@ -8,7 +8,7 @@ import axios from 'axios';
 const MyBooking = () => {
   const { sideBarValue, bookingDetails,
     setEditBookingDetails, usernameLocalState,
-    setEditBookingPage, setEditBookingId, editBookingDetails
+    setEditBookingPage, setEditBookingId
   } = useContext(ValueContext);
 
   const navigate = useNavigate();
@@ -18,12 +18,12 @@ const MyBooking = () => {
   const handleGetEditButton = async (bookingId) => {
     setEditBookingPage(true);
     const response = await axios.get(`${apiUrl}/getEditBookingDetails?username=${usernameLocalState}&bookingId=${bookingId}`)
-    console.log(response.data);
+    //console.log(response.data);
     setEditBookingDetails(response.data);
     setEditBookingId(bookingId);
   }
 
-  console.log(editBookingDetails, "editBookingDetails");
+  //console.log(editBookingDetails, "editBookingDetails");
   return (
     <div>
       <div className='text-center'>
