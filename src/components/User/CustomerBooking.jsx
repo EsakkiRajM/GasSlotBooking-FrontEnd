@@ -4,6 +4,12 @@ import axios from 'axios';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Autocomplete, TextField } from '@mui/material';
 import LoadingPage from '../LoadingPage';
+//import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 const CustomerBooking = () => {
     //Global State
@@ -11,16 +17,18 @@ const CustomerBooking = () => {
 
     //console.log(usernameLocalState);
 
+    const [selectedDate, setSelectedDate] = useState('');
+
     const userId = localStorage.getItem("id")
 
     // Local state
     const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
     const [loading, setLoading] = useState(false);
-    const [gasProviderName, setGasProviderName] = useState("");
+    const [gasProviderName, setGasProviderName] = useState(null);
 
     //console.log(gasProviderName, "gasProviderName");
 
-    const handleFormSubmit = async (values,  { resetForm }) => {
+    const handleFormSubmit = async (values, { resetForm }) => {
         setLoading(true);
         console.log(values);
         try {
@@ -37,7 +45,7 @@ const CustomerBooking = () => {
                     signUpId: userId
                 })
                 //console.log(response.data.message);
-                if(response.data.message){
+                if (response.data.message) {
                     resetForm();
                     setGasProviderName("");
                 }
@@ -55,6 +63,61 @@ const CustomerBooking = () => {
 
         setLoading(false);
     };
+
+    const handleDateChange = (date) => {
+        const day = date.getDate(); // Extract date part from the date object
+        const month = date.getMonth() + 1; // Extract month part from the date object
+        const year = date.getFullYear(); // Extract year part from the date object
+        const hours = date.getHours(); // Extract hours part from the date object
+        const minutes = date.getMinutes(); // Extract minutes part from the date object
+
+        const dateObject = new Date(year, month - 1, day, hours, minutes); // Create a new Date object
+
+        const fullYear = dateObject.getFullYear(); // Extract full year from the new Date object
+
+        const filterDateTime = `${day}/${month}/${year} ${hours}:${minutes}`; // Construct the date-time string
+
+        const [datePart, timePart] = filterDateTime.split(" "); // Split into date and time parts
+        const [days, months, years] = datePart.split("/"); // Split date part into day, month, year
+        const [hour, min] = timePart.split(":"); // Split time part into hours, minutes
+
+        // console.log(fullYear, "fullyear"); // Log the full year
+
+        // console.log(typeof filterDateTime); // Log the type of filterDateTime
+
+        // const resut = Object.entries(filterDateTime);
+
+        // const splitDate = resut.split(',')
+
+        // console.log(splitDate, "result");
+
+        console.log(typeof filterDateTime);
+        setSelectedDate(datePart)
+
+        //setSelectedDate(timePart)
+
+        // setSelectedDate(filterDateTime); // Uncomment this line if you want to set the selected date
+    };
+
+    const handeleDateTime = (event) => {
+        //const fullDateTime = event.$d;
+        //const date = fullDateTime.slice(8, 10);
+        //console.log(typeof fullDateTime);
+        
+        const date = event.$D
+        const month = event.$M + 1
+        const year = event.$y
+        const hour = event.$H
+        const mins = event.$m
+
+        const fullDateTime = `${date}/${month}/${year} ${hour}:${mins}`
+        setSelectedDate(fullDateTime);
+
+    }
+
+
+
+
 
     const gasProviders = [
         { label: '' }, // Empty option
@@ -90,6 +153,7 @@ const CustomerBooking = () => {
                                     address1: "",
                                     address2: "",
                                     gasprovider: gasProviderName,
+                                    date: selectedDate
                                 }}
 
                                 validate={(values) => {
@@ -286,8 +350,38 @@ const CustomerBooking = () => {
                                             </Field>
 
                                             <br />
+                                            {
+                                                /**Date picker start */
+                                            }
+
                                         </div>
                                     </div>
+                                    <div className="row m-2">
+                                        <div className='col-sm-6 col-12'>
+                                            {/* <Field name="date">
+                                                {({ field }) => (
+                                                    <>
+                                                        <DatePicker
+                                                            {...field}
+                                                            selected={selectedDate}
+                                                            onChange={(date) => handleDateChange(date)}
+                                                            showTimeSelect
+                                                            minDate={new Date()}
+                                                        />
+
+                                                    </>
+                                                )}
+                                            </Field>{' '} */}
+                                            <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                                <DemoContainer components={['DateTimePicker']}>
+                                                    <DateTimePicker name="date" label="Select Your Available Date & Time" disablePast onChange={handeleDateTime} />
+                                                </DemoContainer>
+                                            </LocalizationProvider>
+                                            <br />
+                                            {/* <ErrorMessage name="date" component="div" className="text-danger" /> */}
+                                        </div>
+                                    </div>
+
 
 
                                     {/* <div className='row m-3'>
