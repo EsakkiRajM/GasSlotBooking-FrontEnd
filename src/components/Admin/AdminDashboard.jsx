@@ -32,7 +32,7 @@ import ViewBooking from './ViewBooking';
 
 const AdminDashboard = () => {
 
-  const { usernameLocalState, adminSideBarValue, setAdminSideBarValue, setCustomerDetails } = useContext(ValueContext);
+  const { usernameLocalState, adminSideBarValue, setAdminSideBarValue, setCustomerDetails, setUsernameLocalState,  setPhoneNumberLocalState} = useContext(ValueContext);
 
   const apiUrl = import.meta.env.VITE_BE_URL; // Ensure the correct backend URL
 
