@@ -14,12 +14,12 @@ import './EditBooking.css';
 const EditBooking = () => {
 
     const { editBookingDetails,
-        usernameLocalState, editBookingPage, editBookingId, setEditBookingPage, setBookingDetails
+        usernameLocalState, editBookingPage, editBookingId, setEditBookingPage, setBookingDetails,
+        selectedDateGlobal
     } = useContext(ValueContext);
 
     //console.log(editBookingDetails, "editBookingId");
     // console.log(editBookingId, "editBookingId");
-
 
     const [selectedDate, setSelectedDate] = useState('');
 
@@ -34,6 +34,10 @@ const EditBooking = () => {
         const response = await axios.get(`${apiUrl}/getBookingDetails?username=${usernameLocalState}`);
         setBookingDetails(response.data);
     }
+    
+    //console.log(gasProviderName, "gasProviderName");
+
+        
 
     const handleFormSubmit = async (values, { resetForm }) => {
         setLoading(true);
@@ -49,7 +53,9 @@ const EditBooking = () => {
                     pinCode: values.pincode,
                     gasProviderName: gasProviderName,
                     DateTime: selectedDate
+
                 })
+                
                 if (response.data.message) {
                     resetForm();
                     setGasProviderName("");
@@ -316,6 +322,7 @@ const EditBooking = () => {
                                                                             ...params.InputProps,
                                                                             type: 'text',
                                                                         }}
+                                                                        value={"gas"}
                                                                     />
                                                                 )}
                                                                 onChange={(event, newValue) => {
@@ -334,7 +341,9 @@ const EditBooking = () => {
                                             <div className='col-sm-6 col-12'>
                                                 <LocalizationProvider dateAdapter={AdapterDayjs} >
                                                     <DemoContainer components={['DateTimePicker']}>
-                                                        <DateTimePicker name="date" label="Select Your Available Date & Time" disablePast onChange={handeleDateTime} />
+                                                        <DateTimePicker name="date" label="Select Your Available Date & Time" disablePast onChange={handeleDateTime} 
+                                                         value={selectedDateGlobal}
+                                                        />
                                                     </DemoContainer>
                                                 </LocalizationProvider>
                                                 <br />

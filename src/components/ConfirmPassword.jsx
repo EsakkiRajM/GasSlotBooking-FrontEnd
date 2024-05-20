@@ -44,7 +44,7 @@ const ConfirmPassword = () => {
       values.password = '';
       values.confirmPassword = '';
     } catch (err) {
-      console.log(err.response.data);
+      //console.log(err.response.data);
       setLoading(false);
     }
   };

@@ -25,7 +25,7 @@ const App = () => {
   const [ editBookingDetails, setEditBookingDetails ] = useState([])
   const [ editBookingPage, setEditBookingPage ] = useState(false);
   const [ customerDetails, setCustomerDetails ] = useState([]);
-
+  const [ gasProviderNameGlobal, setGasProviderNameGlobal ] = useState(null);
 
   const router = createBrowserRouter([
     {
@@ -76,7 +76,8 @@ const App = () => {
         editBookingDetails, setEditBookingDetails,
         editBookingPage, setEditBookingPage,
         adminSideBarValue, setAdminSideBarValue,
-        customerDetails, setCustomerDetails
+        customerDetails, setCustomerDetails,
+        gasProviderNameGlobal, setGasProviderNameGlobal
       }}>
         <RouterProvider router={router} />
       </ValueContext.Provider>

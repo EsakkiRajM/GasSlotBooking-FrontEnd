@@ -14,11 +14,11 @@ import './EditBooking.css';
 
 const CustomerBooking = () => {
     //Global State
-    const { sideBarValue, phoneNumberLocalState, usernameLocalState, setBookingDetails } = useContext(ValueContext);
+    const { sideBarValue, phoneNumberLocalState, usernameLocalState } = useContext(ValueContext);
 
-    //console.log(usernameLocalState);
+    const [ selectedDate, setSelectedDate ] = useState('');
 
-    const [selectedDate, setSelectedDate] = useState('');
+    //console.log(selectedDateGlobal, "selectedDateGlobal");
 
     const userId = localStorage.getItem("id")
 
@@ -82,8 +82,7 @@ const CustomerBooking = () => {
 
     }
 
-
-
+    //console.log(selectedDate, "selectedDate global state");
 
 
     const gasProviders = [
@@ -340,8 +339,10 @@ const CustomerBooking = () => {
                                                 )}
                                             </Field>{' '} */}
                                             <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                                <DemoContainer components={['DateTimePicker']}>
-                                                    <DateTimePicker name="date" label="Select Your Available Date & Time" disablePast onChange={handeleDateTime} />
+                                                <DemoContainer components={['DateTimePicker']} >
+                                                    <DateTimePicker name="date" label="Select Your Available Date & Time" disablePast onChange={handeleDateTime} 
+                                                    
+                                                    />
                                                 </DemoContainer>
                                             </LocalizationProvider>
                                             <br />

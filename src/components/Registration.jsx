@@ -37,7 +37,7 @@ const Registration = () => {
       }
     } catch (err) {
       const errorName = err.response.data.error
-      console.log(err.response.data.error, "err");
+      //console.log(err.response.data.error, "err");
 
       if (errorName === "User not found") {
         const hashPassword = await bcryptjs.hash(values.password, 0);

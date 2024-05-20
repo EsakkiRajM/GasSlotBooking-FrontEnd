@@ -32,7 +32,7 @@ const ForgotPassword = () => {
       }
     } catch (err) {
       const errorName = err.response.data.error
-      console.log(errorName, "err");
+      //console.log(errorName, "err");
         if (errorName === "User not found") {
           //alert('username not found')
           setIsShowAlertMsg(true);
